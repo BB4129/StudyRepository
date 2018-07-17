@@ -11,21 +11,30 @@ namespace ConsoleApp2
     {
         static void Main(string[] args)
         {
+
             Player player = new Player();
-            GameSystem gs = new GameSystem();
+            GameSystem gamesystem = new GameSystem();
+            bool createdPlayerFlg = false;
 
-            //コンソールで入力した値をハッシュ値にする
-            Console.WriteLine("ニックネームを入力してください");
-            player.hash = gs.HashGanerator(Console.ReadLine());
+            while (!createdPlayerFlg)
+            {
+                //コンソールで入力した値をハッシュ値にする
+                Console.WriteLine("ニックネームを入力してください");
+                player.hash = gamesystem.HashGanerator(Console.ReadLine());
 
-            //ハッシュ値を文字に置き換えて配列に格納
-            string[] hashChar =player.hash.MySplit(1);
-            
-            //ハッシュ値をステータスに変換
-            player.status = gs.ConvertHashToStatus((string[])hashChar);
+                //ハッシュ値を文字に置き換えて配列に格納
+                string[] hashChar = player.hash.MySplit(1);
+                
 
-            //ステータスを全て出力
-            Display.ShowStatus(Const.statusStringArray, player);
+                //ハッシュ値をステータスに変換
+                player.status = gamesystem.ConvertHashToStatus(hashChar);
+
+                //ステータスを全て出力
+                Display.ShowStatus(Const.statusStringArray, player);
+
+                //キャラクター作成確認
+                createdPlayerFlg = Display.LoopCreateCharacter(createdPlayerFlg);                
+            }
             
         }
         //文字分割メソッド

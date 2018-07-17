@@ -21,8 +21,23 @@ namespace ConsoleApp2
                 {
                     //ハッシュ値を10進数に変換
                     int hashCharNum = Convert.ToInt32(hashChar[i * j - 1],16);
+
+                    //防御率と命中率の調整
+                    if (i == 7 || i == 8) 
+                    {
+                        status[i-1] += (hashCharNum / 5) +1;
+                        continue;
+                    }
+
                     status[i - 1] += hashCharNum;
+                    
                 }
+            }
+            //命中率調整(90~100程度にする)
+            status[6] = 105 - status[6];
+            if (status[6] > 100)
+            {
+                status[6] = 100;
             }
             return status;
         }
@@ -30,7 +45,7 @@ namespace ConsoleApp2
         //ハッシュ値を生成する
         public  String HashGanerator(string inputString)
         {
-            string hashValue = GetHashedTextString(Console.ReadLine());
+            string hashValue = GetHashedTextString(inputString);
             return hashValue;
         }
 
@@ -39,6 +54,7 @@ namespace ConsoleApp2
         {
             // パスワードをUTF-8エンコードでバイト配列として取り出す
             byte[] byteValues = Encoding.UTF8.GetBytes(inputString);
+
 
             // SHA256のハッシュ値を計算する
             SHA256 crypto256 = new SHA256CryptoServiceProvider();
