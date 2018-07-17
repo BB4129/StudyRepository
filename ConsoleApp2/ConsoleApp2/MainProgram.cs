@@ -12,21 +12,17 @@ namespace ConsoleApp2
         static void Main(string[] args)
         {
             Player player = new Player();
-
-            Console.WriteLine("ニックネームを入力してください");
-
             GameSystem gs = new GameSystem();
 
             //コンソールで入力した値をハッシュ値にする
+            Console.WriteLine("ニックネームを入力してください");
             player.hash = gs.HashGanerator(Console.ReadLine());
 
-
+            //ハッシュ値を文字に置き換えて配列に格納
             string[] hashChar =player.hash.MySplit(1);
-
             
             //ハッシュ値をステータスに変換
-            player.status = gs.ConvertHashToStatus(hashChar);
-
+            player.status = gs.ConvertHashToStatus((string[])hashChar);
 
             //ステータスを全て出力
             Display.ShowStatus(Const.statusStringArray, player);
